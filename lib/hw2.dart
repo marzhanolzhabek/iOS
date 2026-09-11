@@ -1,14 +1,14 @@
-void checkBalance({required String name, required double balance}) =>
-    print('$name, your available balance is: $balance ₸');
+void checkBalance({required String name, required double balance})=>
+    print('$name, your available balance is: $balance tenge');
 
-double deposit({required double currentBalance, double? amount}) {
-  double depositAmount = amount ?? 0.0;
-  double newBalance = currentBalance + depositAmount;
+double deposite({required double currentBalance, double? amount}){
+  double amt = amount ?? 0.0;
+  double total = currentBalance + amt;
 
-  print('Deposit received: $depositAmount ₸');
-  print('New balance: $newBalance ₸');
+  print('U deposited $amt tenge');
+  print('Ur new balance is $total tenge');
 
-  return newBalance;
+  return total;
 }
 
 double withdraw({
@@ -16,55 +16,47 @@ double withdraw({
   required double currentBalance,
   double? amount,
   int? pinCode,
-}) {
-  int correctPin = 1234;
-  int enteredPin = pinCode ?? 0000;
+}){
+  int realPin = 1234;
+  int userPin = pinCode ?? 0000;
 
-  if (enteredPin != correctPin) {
-    print('Transaction declined: incorrect PIN code.');
+  if (userPin != realPin){
+    print('Wrong PIN! Transaction failed.');
     return currentBalance;
   }
+  double amt = amount ?? 0.0;
 
-  double withdrawAmount = amount ?? 0.0;
-
-  if (withdrawAmount > currentBalance) {
-    print('Transaction declined: insufficient funds.');
+  if(amt > currentBalance){
+    print('Not enough money!');
     return currentBalance;
   }
+  double total = currentBalance - amt;
 
-  double newBalance = currentBalance - withdrawAmount;
+  print('$name withdrew $amt tenge');
+  print('Ur new balance id $total tenge');
 
-  print('$name, withdrawal successful: $withdrawAmount ₸');
-  print('Remaining balance: $newBalance ₸');
-
-  return newBalance;
+  return total;
 }
 
-void main() {
-  double balance = 10000.0;
+void main(){
+  double myBalance = 10000.0;
 
-  checkBalance(name: 'Marzhan', balance: balance);
+  checkBalance(name: 'Marzhan', balance: myBalance);
 
-  balance = deposit(currentBalance: balance, amount: 2500.0);
+  myBalance = deposite(currentBalance: myBalance, amount : 2500.0);
 
-  balance = withdraw(
+  myBalance = withdraw(
     name: 'Marzhan',
-    currentBalance: balance,
-    amount: 5000.0,
-    pinCode: 1234,
-  );
-  balance = withdraw(
-    name: 'Marzhan',
-    currentBalance: balance,
-    amount: 1000.0,
-    pinCode: 9999,
-  );
-  balance = withdraw(
-    name: 'Marzhan',
-    currentBalance: balance,
-    amount: 999999.0,
-    pinCode: 1234,
+    currentBalance: myBalance,
+    amount : 5000.0,
+    pinCode : 1234,
   );
 
-  checkBalance(name: 'Marzhan', balance: balance);
+  myBalance = withdraw(
+      name: 'Marzhan',
+      currentBalance: myBalance,
+      amount:1000.0,
+      pinCode:9999,
+  );
+  checkBalance(name: 'Marzhan', balance: myBalance);
 }
