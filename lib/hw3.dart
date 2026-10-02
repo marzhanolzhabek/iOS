@@ -1,94 +1,142 @@
-abstract class MediaItem{
+abstract class MediaItem {
   String id;
   String title;
   double price;
 
-  MediaItem(this.id,this.title,this.price);
+  MediaItem(this.id, this.title, this.price);
 
   String getDetails();
 }
 
-mixin Downloadable{
-  void download(String title){
-    print("Downloading $title");
+mixin Downloadable {
+  void download(String title) {
+    print("Downloading: $title");
   }
 }
 
-class Audiobook extends MediaItem with Downloadable{
+class Audiobook extends MediaItem with Downloadable {
   double durationHours;
   String narrator;
 
-  Audiobook(String id,String title,double price,this.durationHours,this.narrator)
-      :super(id,title,price);
+  Audiobook(
+      String id,
+      String title,
+      double price,
+      this.durationHours,
+      this.narrator,
+      ) : super(id, title, price);
 
   @override
-  String getDetails(){
-    return "$title $price $durationHours $narrator";
+  String getDetails() {
+    return "Audiobook: $title | okushy: $narrator | "
+        "Duration: $durationHours hours | Price: \$${price}";
   }
 }
 
-class EBook extends MediaItem with Downloadable{
+class EBook extends MediaItem with Downloadable {
   double fileSizeMB;
   String author;
 
-  EBook(String id,String title,double price,this.fileSizeMB,this.author)
-      :super(id,title,price);
+  EBook(
+      String id,
+      String title,
+      double price,
+      this.fileSizeMB,
+      this.author,
+      ) : super(id, title, price);
 
   @override
-  String getDetails(){
-    return "$title $price $fileSizeMB $author";
+  String getDetails() {
+    return "EBook: $title | Author: $author | "
+        "Size: $fileSizeMB MB | Price: \$${price}";
   }
 }
 
-class ShoppingCart{
+class ShoppingCart {
   List<MediaItem> _items = [];
 
-  void addItem(MediaItem item){
+  void addItem(MediaItem item) {
     _items.add(item);
   }
 
-  double calculateTotalWithTax({double taxRate=0.12}){
-    double total = _items.fold(0.0,(sum,item)=>sum+item.price);
-    return total+(total*taxRate);
+  double calculateTotalWithTax({double taxRate = 0.12}) {
+    double total = _items.fold(
+      0,
+          (sum, item) => sum + item.price,
+    );
+
+    return total + (total * taxRate);
   }
 
-  List<MediaItem> filterByMaxPrice(double maxPrice){
-    return _items.where((item)=>item.price<=maxPrice).toList();
+  List<MediaItem> filterByMaxPrice(double maxPrice) {
+    return _items.where((item) => item.price <= maxPrice).toList();
   }
 
-  void printReceipt(){
-    for(MediaItem item in _items){
+  void printReceipt() {
+
+    for (MediaItem item in _items) {
       print(item.getDetails());
 
-      if(item is Audiobook){
-        item.download(item.title);
-      }
-      else if(item is EBook){
-        item.download(item.title);
+      if (item is Downloadable) {
+        (item as Downloadable).download(item.title);
       }
     }
-    print("Total: ${calculateTotalWithTax()}");
+
+    print(
+      "Total with tax: \$${calculateTotalWithTax().toStringAsFixed(2)}",
+    );
   }
 }
 
-void main(){
+void main() {
+  Audiobook audiobook1 = Audiobook(
+    "A01",
+    "Abai ",
+    15.0,
+    5.5,
+    "Abai",
+  );
+
+  Audiobook audiobook2 = Audiobook(
+    "A02",
+    "Mukhtar",
+    12.0,
+    10.0,
+    "Mukhtar",
+  );
+
+  EBook ebook1 = EBook(
+    "E01",
+    "Marzhan",
+    20.0,
+    5.2,
+    "Robert ",
+  );
+
+  EBook ebook2 = EBook(
+    "E02",
+    "Bekzat",
+    8.0,
+    3.5,
+    "Bekzat",
+  );
+
   ShoppingCart cart = ShoppingCart();
 
-  Audiobook a1 = Audiobook("1","Harry Potter",5000,10.5,"Stephen Fry");
-  EBook e1 = EBook("2","The Hobbit",3500,5.2,"Tolkien");
-  EBook e2 = EBook("3","1984",2500,3.5,"George Orwell");
+  cart.addItem(audiobook1);
+  cart.addItem(audiobook2);
+  cart.addItem(ebook1);
+  cart.addItem(ebook2);
 
-  cart.addItem(a1);
-  cart.addItem(e1);
-  cart.addItem(e2);
+  print("Items under \$15:");
 
-  cart.printReceipt();
+  List<MediaItem> cheapItems = cart.filterByMaxPrice(15);
 
-  print("Books under 4000");
-
-  List<MediaItem> books = cart.filterByMaxPrice(4000);
-
-  for(MediaItem item in books){
+  for (MediaItem item in cheapItems) {
     print(item.getDetails());
   }
+
+  print("");
+
+  cart.printReceipt();
 }

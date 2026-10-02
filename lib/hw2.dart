@@ -1,12 +1,16 @@
-void checkBalance({required String name, required double balance})=>
-    print('$name, your available balance is: $balance tenge');
+void checkBalance({
+  required String name,
+  required double balance})=>
+    print('$name,ur available balance is: $balance tenge');
 
-double deposite({required double currentBalance, double? amount}){
+double deposite({
+  required double currentBalance,
+  double? amount}){
   double amt = amount ?? 0.0;
   double total = currentBalance + amt;
 
-  print('U deposited $amt tenge');
-  print('Ur new balance is $total tenge');
+  print('u deposited $amt tenge');
+  print('ur new balance is $total tenge');
 
   return total;
 }
@@ -21,13 +25,13 @@ double withdraw({
   int userPin = pinCode ?? 0000;
 
   if (userPin != realPin){
-    print('Wrong PIN! Transaction failed.');
+    print('wrong PIN! Transaction failed.');
     return currentBalance;
   }
   double amt = amount ?? 0.0;
 
   if(amt > currentBalance){
-    print('Not enough money!');
+    print('not enough money!');
     return currentBalance;
   }
   double total = currentBalance - amt;

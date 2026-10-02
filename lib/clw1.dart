@@ -2,39 +2,37 @@ double processOrder({
   required String orderId,
   required double itemPrice,
   String? promoCode,
-  double? deliveryFee,
+  double ?deliveryFee,
 }) {
   double delivery = deliveryFee ?? 500.0;
   double discountAmount = 0;
 
-  if(promoCode == 'SAVE10'){
-    discountAmount = itemPrice * 0.10;
+  if (itemPrice > 4000) {
+    delivery *= 1.1;
   }
 
+  if (promoCode == 'SAVE10') {
+    discountAmount = itemPrice * 0.10;
+  }
   double total = itemPrice - discountAmount + delivery;
-  print('---Order Summary ---');
-  print('Order ID: $orderId');
-  print('Item Price: $itemPrice');
-  print('Promo Code: ${promoCode ?? "Not applied"}');
-  print('Discount: $discountAmount');
-  print('Delivery Fee: $delivery');
-  print('Total to Pay: $total');
 
+  print('orderId : $orderId');
+  print('ur itemPrice : $itemPrice');
   return total;
 }
 
-void main(){
+void main() {
   double result = processOrder(
-      orderId: 'ORD2026-01',
-      itemPrice: 8500.0,
-      promoCode: 'SAVE10',
-  );
+      orderId: 'ORD-1',
+      itemPrice: 3000.0,
+      promoCode: 'SAVE20',
+      deliveryFee: 400.0
 
-print ('Returned value: $result');
-
-processOrder(
-  orderId: 'ORD2026-02',
-  itemPrice: 3200.0,
-  deliveryFee: 800.0,
   );
+  print('$result');
+  print(processOrder(
+      orderId: 'Ord2',
+      itemPrice: 5000.0,
+      promoCode: ''));
+
 }
