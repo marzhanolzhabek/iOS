@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'product.dart';
 
@@ -30,9 +29,11 @@ class FavoritesScreen extends StatelessWidget {
         return Card(
           margin: const EdgeInsets.all(10),
           child: ListTile(
-            leading: Image.network(
+            leading: Image.asset(
               product.image,
               width: 70,
+              height: 70,
+              fit: BoxFit.contain,
               errorBuilder: (context, error, stackTrace) {
                 return const Icon(Icons.image, size: 50);
               },

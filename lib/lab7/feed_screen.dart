@@ -26,17 +26,29 @@ class FeedScreen extends StatelessWidget {
         return Card(
           margin: const EdgeInsets.all(10),
           child: ListTile(
-            leading: Image.network(
-              product.image,
-              width: 70,
-              errorBuilder: (context, error, stackTrace) {
-                return const Icon(Icons.image, size: 50);
-              },
+            leading: ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Image.asset(
+                product.image,
+                width: 55,
+                height: 55,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return const SizedBox(
+                    width: 55,
+                    height: 55,
+                    child: Icon(Icons.image, size: 40),
+                  );
+                },
+              ),
             ),
+
             title: Text(product.title),
+
             subtitle: Text(
               '\$${product.price.toStringAsFixed(2)}',
             ),
+
             trailing: IconButton(
               icon: Icon(
                 favorites.contains(product)
@@ -46,6 +58,7 @@ class FeedScreen extends StatelessWidget {
               ),
               onPressed: () => onFavoriteTap(product),
             ),
+
             onTap: () => onProductTap(product),
           ),
         );

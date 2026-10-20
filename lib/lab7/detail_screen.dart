@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'product.dart';
 
@@ -21,7 +20,7 @@ class DetailScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.network(
+            Image.asset(
               product.image,
               height: 220,
               width: double.infinity,
@@ -64,7 +63,10 @@ class DetailScreen extends StatelessWidget {
 
             const SizedBox(height: 20),
 
-            Text(product.description),
+            Text(
+              product.description,
+              style: const TextStyle(fontSize: 16),
+            ),
 
             const SizedBox(height: 30),
 
