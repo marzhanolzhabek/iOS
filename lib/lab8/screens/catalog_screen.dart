@@ -18,7 +18,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
   List<Product> products = [];
 
   List<Product> getInitialProducts() {
-    return const [
+    return [
       Product(
         id: 1,
         title: 'Wireless Headphones',
@@ -111,29 +111,44 @@ class _CatalogScreenState extends State<CatalogScreen> {
 
     if (originalIndex == -1) return;
 
+    final messenger = ScaffoldMessenger.of(context);
+
     setState(() {
       products.removeAt(originalIndex);
     });
 
-    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    messenger.hideCurrentSnackBar();
 
-    ScaffoldMessenger.of(context).showSnackBar(
+    messenger.showSnackBar(
       SnackBar(
         behavior: SnackBarBehavior.floating,
-        duration: const Duration(seconds: 5),
-        content: Text('${product.title} deleted'),
+        duration: const Duration(seconds: 8),
+        backgroundColor: Colors.deepPurple,
+        content: Text(
+          '${product.title} deleted',
+          style: const TextStyle(
+            color: Colors.white,
+          ),
+        ),
         action: SnackBarAction(
           label: 'UNDO',
+          textColor: Colors.amber,
           onPressed: () {
             if (!mounted) return;
 
             setState(() {
-              final restoreIndex = originalIndex.clamp(
-                0,
-                products.length,
+              final alreadyExists = products.any(
+                    (item) => item.id == product.id,
               );
 
-              products.insert(restoreIndex, product);
+              if (!alreadyExists) {
+                final restoreIndex = originalIndex.clamp(
+                  0,
+                  products.length,
+                );
+
+                products.insert(restoreIndex, product);
+              }
             });
           },
         ),
@@ -142,12 +157,12 @@ class _CatalogScreenState extends State<CatalogScreen> {
   }
 
   void resetCatalog() {
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
     setState(() {
       products = getInitialProducts();
       nextId = 7;
     });
-
-    ScaffoldMessenger.of(context).hideCurrentSnackBar();
   }
 
   Widget buildEmptyState() {
@@ -169,7 +184,9 @@ class _CatalogScreenState extends State<CatalogScreen> {
             ),
           ),
           const SizedBox(height: 12),
-          const Text('All products have been removed.'),
+          const Text(
+            'All products have been removed.',
+          ),
           const SizedBox(height: 24),
           ElevatedButton.icon(
             onPressed: resetCatalog,
@@ -180,6 +197,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
       ),
     );
   }
+
 
   Widget buildListView() {
     return ListView.separated(
@@ -210,7 +228,9 @@ class _CatalogScreenState extends State<CatalogScreen> {
           onDismissed: (direction) {
             deleteProduct(product);
           },
-          child: ProductListItem(product: product),
+          child: ProductListItem(
+            product: product,
+          ),
         );
       },
     );
@@ -231,7 +251,9 @@ class _CatalogScreenState extends State<CatalogScreen> {
       itemBuilder: (context, index) {
         final product = products[index];
 
-        return ProductGridCard(product: product);
+        return ProductGridCard(
+          product: product,
+        );
       },
     );
   }
