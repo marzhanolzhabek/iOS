@@ -1,3 +1,4 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -26,6 +27,7 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -47,18 +49,21 @@
 			</array>
 		</dict>
 	</dict>
+
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
@@ -66,5 +71,18 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+
+	<!-- LAB 13: CAMERA PERMISSION -->
+	<key>NSCameraUsageDescription</key>
+	<string>LUNA MOMENTS needs camera access to capture diary photos.</string>
+
+	<!-- LAB 13: PHOTO GALLERY PERMISSION -->
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>LUNA MOMENTS needs photo library access to select pictures.</string>
+
+	<!-- LAB 13: GPS LOCATION PERMISSION -->
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>LUNA MOMENTS needs your location to geotag diary entries.</string>
+
 </dict>
 </plist>
